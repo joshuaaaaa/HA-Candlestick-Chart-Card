@@ -1,0 +1,31 @@
+{
+  "name": "ha-candlestick-chart-card",
+  "version": "1.0.0",
+  "description": "Home Assistant custom card for displaying candlestick charts",
+  "main": "dist/candlestick-chart-card.js",
+  "scripts": {
+    "build": "rollup -c",
+    "watch": "rollup -c --watch",
+    "dev": "rollup -c --watch"
+  },
+  "keywords": [
+    "homeassistant",
+    "lovelace",
+    "custom-card",
+    "candlestick",
+    "chart"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "rollup": "^4.9.6"
+  },
+  "dependencies": {
+    "apexcharts": "^3.45.2",
+    "custom-card-helpers": "^1.9.0",
+    "lit": "^3.1.1"
+  }
+}
