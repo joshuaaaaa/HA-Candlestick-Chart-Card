@@ -123,6 +123,8 @@ class CandlestickChartCard extends HTMLElement {
           border-radius: 8px;
           overflow: hidden;
           background: var(--card-background-color, #1a1a1a);
+          min-height: 400px;
+          position: relative;
         }
         .info-bar {
           display: flex;
@@ -195,8 +197,12 @@ class CandlestickChartCard extends HTMLElement {
     `;
 
     this.setupEventListeners();
-    this.initChart();
-    this.loadHistoricalData();
+
+    // Wait for DOM to be ready before initializing chart
+    requestAnimationFrame(() => {
+      this.initChart();
+      this.loadHistoricalData();
+    });
   }
 
   setupEventListeners() {
@@ -218,8 +224,11 @@ class CandlestickChartCard extends HTMLElement {
     // Clear previous chart
     container.innerHTML = '';
 
+    // Get container width, fallback to parent or minimum width
+    const width = container.clientWidth || container.offsetWidth || 600;
+
     this.chart = createChart(container, {
-      width: container.clientWidth,
+      width: width,
       height: this._config.height,
       layout: {
         background: { color: 'transparent' },
