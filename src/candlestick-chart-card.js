@@ -286,6 +286,24 @@ class CandlestickChartCard extends HTMLElement {
         timeVisible: true,
         secondsVisible: false,
       },
+      localization: {
+        locale: navigator.language || 'cs-CZ',
+        timeFormatter: (time) => {
+          const date = new Date(time * 1000);
+          return date.toLocaleTimeString(navigator.language || 'cs-CZ', {
+            hour: '2-digit',
+            minute: '2-digit',
+          });
+        },
+        dateFormatter: (time) => {
+          const date = new Date(time * 1000);
+          return date.toLocaleDateString(navigator.language || 'cs-CZ', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+          });
+        },
+      },
       candles: {
         upColor: '#26a69a',
         downColor: '#ef5350',
@@ -315,6 +333,7 @@ class CandlestickChartCard extends HTMLElement {
       crosshair: colors.crosshair,
       rightPriceScale: colors.rightPriceScale,
       timeScale: colors.timeScale,
+      localization: colors.localization,
     });
 
     this.candlestickSeries = this.chart.addCandlestickSeries({
