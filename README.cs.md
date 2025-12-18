@@ -15,6 +15,7 @@ Vlastní karta pro Home Assistant Lovelace, která zobrazuje **živé cryptocurr
 - 🔌 **WebSocket Připojení** - Indikátor živého spojení s auto-reconnect
 - 🎯 **Binance Integrace** - Přímé připojení k Binance krypto tržním datům
 - 🌓 **Auto Světlý/Tmavý Motiv** - Detekuje a přizpůsobuje se HA motivu automaticky
+- 🌍 **Lokální Časová Zóna** - Zobrazuje časy ve vaší lokální časové zóně automaticky
 - 🎛️ **Přizpůsobitelné UI** - Skrýt/zobrazit hlavičku, toolbar, volume bars
 - 📱 **Responzivní** - Funguje na všech velikostech s dynamickou velikostí karty
 
@@ -204,6 +205,39 @@ cards:
         default_interval: 1h
         height: 300
 ```
+
+## 🌍 Časová Zóna & Lokalizace
+
+Karta automaticky zobrazuje časy ve vaší lokální časové zóně prohlížeče:
+
+### Automatická Konverze Časové Zóny
+
+- **UTC na Lokální**: Binance poskytuje data v UTC, karta konvertuje na vaši lokální zónu
+- **Respektuje Letní Čas**: Automaticky zpracovává změny letního času
+- **Žádná Konfigurace**: Funguje automaticky podle nastavení prohlížeče
+
+### Jak to Funguje
+
+1. Graf přijímá časová razítka z Binance v UTC
+2. Automaticky konvertuje na časovou zónu vašeho prohlížeče
+3. Formátuje data a časy podle lokálního nastavení prohlížeče
+4. Okamžitě se aktualizuje při změně časové zóny
+
+### Příklady
+
+Pokud jste ve Středoevropském čase (CET/CEST):
+- **UTC 20:00** → **CET 21:00** (zima) nebo **CEST 22:00** (léto)
+- **Graf zobrazuje**: Časy ve vaší lokální zóně (např. 21:00, 22:00)
+- **Formát data**: Odpovídá vašemu locale (např. DD.MM.RRRR pro ČR)
+
+### Detekce Locale Prohlížeče
+
+Karta používá `navigator.language` pro detekci jazyka prohlížeče:
+- **Čeští uživatelé**: Data formátována jako `DD.MM.RRRR`, časy jako `HH:MM`
+- **US uživatelé**: Data formátována jako `MM/DD/YYYY`, časy jako `h:MM AM/PM`
+- **Ostatní locale**: Automaticky se přizpůsobí nastavení prohlížeče
+
+Není potřeba manuální konfigurace časové zóny - karta automaticky zobrazuje časy správně pro vaši lokaci! 🌍
 
 ## 🔧 Jak to Funguje
 

@@ -15,6 +15,7 @@ A custom Home Assistant Lovelace card that displays **real-time cryptocurrency c
 - 🔌 **WebSocket Connection** - Live status indicator with auto-reconnect
 - 🎯 **Binance Integration** - Direct connection to Binance crypto market data
 - 🌓 **Auto Light/Dark Theme** - Detects and adapts to HA theme automatically
+- 🌍 **Local Timezone** - Displays times in your browser's local timezone automatically
 - 🎛️ **Customizable UI** - Hide/show header, toolbar, volume bars
 - 📱 **Responsive** - Works on all screen sizes with dynamic card sizing
 
@@ -253,6 +254,39 @@ The card uses these HA CSS variables:
 - `--divider-color` - Borders and separators
 
 No configuration needed - it just works! ✨
+
+## 🌍 Timezone & Localization
+
+The card automatically displays times in your browser's local timezone:
+
+### Automatic Timezone Conversion
+
+- **UTC to Local**: Binance provides data in UTC, card converts to your local timezone
+- **DST Aware**: Automatically handles daylight saving time changes
+- **No Configuration**: Works automatically based on browser locale settings
+
+### How It Works
+
+1. Chart receives timestamps from Binance in UTC
+2. Automatically converts to browser's local timezone
+3. Formats dates and times using your browser's locale
+4. Updates immediately if timezone changes
+
+### Examples
+
+If you're in Central European Time (CET/CEST):
+- **UTC 20:00** → **CET 21:00** (winter) or **CEST 22:00** (summer)
+- **Chart displays**: Times in your local timezone (e.g., 21:00, 22:00)
+- **Date format**: Matches your locale (e.g., DD.MM.YYYY for Czech, MM/DD/YYYY for US)
+
+### Browser Locale Detection
+
+The card uses `navigator.language` to detect your browser's locale:
+- **Czech users**: Dates formatted as `DD.MM.YYYY`, times as `HH:MM`
+- **US users**: Dates formatted as `MM/DD/YYYY`, times as `h:MM AM/PM`
+- **Other locales**: Automatically adapts to browser settings
+
+No manual timezone configuration needed - the card automatically displays times correctly for your location! 🌍
 
 ## 🔧 How It Works
 
