@@ -90,7 +90,8 @@ height: 500
 | `default_interval` | string | `'1m'` | ❌ | Výchozí vybraný interval |
 | `exchange` | string | `'binance'` | ❌ | Název burzy (zobrazeno v info baru) |
 | `height` | number | `500` | ❌ | Výška grafu v pixelech |
-| `show_header` | boolean | `true` | ❌ | Zobrazit/skrýt hlavičku s názvem a tlačítky |
+| `show_header` | boolean | `true` | ❌ | Zobrazit/skrýt info bar s OHLC hodnotami |
+| `show_title` | boolean | `true` | ❌ | Zobrazit/skrýt název karty (funguje nezávisle na show_header) |
 | `show_toolbar` | boolean | `true` | ❌ | Zobrazit/skrýt toolbar s výběrem intervalů |
 | `show_volume` | boolean | `true` | ❌ | Zobrazit/skrýt volume bars pod grafem |
 | `chart_type` | string | `'candlestick'` | ❌ | Typ grafu (budoucí: line, area) |
@@ -176,6 +177,28 @@ intervals:
   - 30m
 default_interval: 5m
 height: 550
+```
+
+### Minimalistický Graf (Bez Hlavičky/Toolbaru)
+
+```yaml
+type: custom:candlestick-chart-card
+symbol: ADAUSDT
+show_header: false
+show_title: false
+height: 400
+```
+
+### Graf Pouze s Názvem (Bez Info Baru)
+
+```yaml
+type: custom:candlestick-chart-card
+symbol: ADAUSDT
+title: "Cardano / USDT"
+show_header: false
+show_title: true
+default_interval: 1h
+height: 400
 ```
 
 ### Více-Kartový Dashboard

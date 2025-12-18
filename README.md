@@ -90,7 +90,8 @@ height: 500
 | `default_interval` | string | `'1m'` | ❌ | Default selected interval |
 | `exchange` | string | `'binance'` | ❌ | Exchange name (displayed in info bar) |
 | `height` | number | `500` | ❌ | Chart height in pixels |
-| `show_header` | boolean | `true` | ❌ | Show/hide card header with title and buttons |
+| `show_header` | boolean | `true` | ❌ | Show/hide info bar with OHLC values |
+| `show_title` | boolean | `true` | ❌ | Show/hide card title (works independently of show_header) |
 | `show_toolbar` | boolean | `true` | ❌ | Show/hide interval selection toolbar |
 | `show_volume` | boolean | `true` | ❌ | Show/hide volume bars below chart |
 | `chart_type` | string | `'candlestick'` | ❌ | Chart type (future: line, area) |
@@ -184,6 +185,19 @@ height: 550
 type: custom:candlestick-chart-card
 symbol: ADAUSDT
 show_header: false
+show_title: false
+height: 400
+```
+
+### Chart with Title Only (No Info Bar)
+
+```yaml
+type: custom:candlestick-chart-card
+symbol: ADAUSDT
+title: "Cardano / USDT"
+show_header: false
+show_title: true
+default_interval: 1h
 height: 400
 ```
 

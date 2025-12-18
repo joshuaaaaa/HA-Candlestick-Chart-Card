@@ -26,6 +26,7 @@ class CandlestickChartCard extends HTMLElement {
       exchange: config.exchange || 'binance',
       height: config.height || 500,
       show_header: config.show_header !== false,
+      show_title: config.show_title !== false, // Show title by default
       show_toolbar: config.show_toolbar !== false,
       show_volume: config.show_volume !== false, // Show volume by default
       chart_type: config.chart_type || 'candlestick',
@@ -197,12 +198,14 @@ class CandlestickChartCard extends HTMLElement {
         }
       </style>
       <div class="card">
-        ${this._config.show_header ? `
+        ${this._config.show_title || this._config.show_toolbar ? `
           <div class="card-header">
-            <div class="card-title">
-              <span class="status-indicator" id="status"></span>
-              ${this._config.title}
-            </div>
+            ${this._config.show_title ? `
+              <div class="card-title">
+                <span class="status-indicator" id="status"></span>
+                ${this._config.title}
+              </div>
+            ` : ''}
             ${this._config.show_toolbar ? `
               <div class="interval-buttons">
                 ${this._config.intervals.map(interval => `
