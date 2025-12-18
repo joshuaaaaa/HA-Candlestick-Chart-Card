@@ -11,10 +11,11 @@ A custom Home Assistant Lovelace card that displays **real-time cryptocurrency c
 - ⏱️ **Multiple Time Intervals** - 1m, 5m, 15m, 1h, 4h, 1d and more
 - 🔴🟢 **Color-Coded Candles** - Green for rising, red for falling (like TradingView)
 - 💹 **OHLC Display** - Real-time Open, High, Low, Close values
-- 🔌 **WebSocket Connection** - Live status indicator
+- 🔌 **WebSocket Connection** - Live status indicator with auto-reconnect
 - 🎯 **Binance Integration** - Direct connection to Binance crypto market data
-- 🌓 **Theme Support** - Automatically adapts to your Home Assistant theme
-- 📱 **Responsive** - Works on all screen sizes
+- 🌓 **Auto Light/Dark Theme** - Detects and adapts to HA theme automatically
+- 🎛️ **Customizable UI** - Hide/show header, toolbar, and more
+- 📱 **Responsive** - Works on all screen sizes with dynamic card sizing
 
 ## 🎥 Preview
 
@@ -87,6 +88,10 @@ height: 500
 | `default_interval` | string | `'1m'` | ❌ | Default selected interval |
 | `exchange` | string | `'binance'` | ❌ | Exchange name (displayed in info bar) |
 | `height` | number | `500` | ❌ | Chart height in pixels |
+| `show_header` | boolean | `true` | ❌ | Show/hide card header with title and buttons |
+| `show_toolbar` | boolean | `true` | ❌ | Show/hide interval selection toolbar |
+| `show_volume` | boolean | `false` | ❌ | Show/hide volume bars (future feature) |
+| `chart_type` | string | `'candlestick'` | ❌ | Chart type (future: line, area) |
 
 ### Supported Intervals
 
@@ -171,6 +176,26 @@ default_interval: 5m
 height: 550
 ```
 
+### Minimalist Chart (No Header/Toolbar)
+
+```yaml
+type: custom:candlestick-chart-card
+symbol: ADAUSDT
+show_header: false
+height: 400
+```
+
+### Clean Chart (Header Only, No Toolbar)
+
+```yaml
+type: custom:candlestick-chart-card
+symbol: BTCUSDT
+title: "Bitcoin"
+show_toolbar: false
+default_interval: 1h
+height: 450
+```
+
 ### Multi-Card Dashboard
 
 Create a crypto dashboard with multiple cards:
@@ -198,6 +223,35 @@ cards:
         default_interval: 1h
         height: 300
 ```
+
+## 🌓 Theme Support
+
+The card automatically detects and adapts to your Home Assistant theme:
+
+### Automatic Theme Detection
+
+- **Light Mode**: Darker text, lighter grid lines, bright backgrounds
+- **Dark Mode**: Lighter text, darker grid lines, dark backgrounds
+- **Auto-Update**: Switches instantly when you change HA theme
+
+### How It Works
+
+1. Detects HA theme from `hass.themes.darkMode`
+2. Falls back to CSS color brightness analysis
+3. Updates all chart colors dynamically
+4. Uses HA CSS variables for perfect integration
+
+### Theme Colors
+
+The card uses these HA CSS variables:
+- `--ha-card-background` - Card background
+- `--primary-text-color` - Main text
+- `--secondary-text-color` - Secondary text
+- `--primary-color` - Accent color (buttons)
+- `--secondary-background-color` - Info bar background
+- `--divider-color` - Borders and separators
+
+No configuration needed - it just works! ✨
 
 ## 🔧 How It Works
 

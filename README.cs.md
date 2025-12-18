@@ -11,10 +11,11 @@ Vlastní karta pro Home Assistant Lovelace, která zobrazuje **živé cryptocurr
 - ⏱️ **Více Časových Intervalů** - 1m, 5m, 15m, 1h, 4h, 1d a více
 - 🔴🟢 **Barevné Svíčky** - Zelené pro růst, červené pro pokles (jako TradingView)
 - 💹 **OHLC Zobrazení** - Real-time Open, High, Low, Close hodnoty
-- 🔌 **WebSocket Připojení** - Indikátor živého spojení
+- 🔌 **WebSocket Připojení** - Indikátor živého spojení s auto-reconnect
 - 🎯 **Binance Integrace** - Přímé připojení k Binance krypto tržním datům
-- 🌓 **Podpora Motivů** - Automaticky se přizpůsobuje vašemu HA motivu
-- 📱 **Responzivní** - Funguje na všech velikostech obrazovek
+- 🌓 **Auto Světlý/Tmavý Motiv** - Detekuje a přizpůsobuje se HA motivu automaticky
+- 🎛️ **Přizpůsobitelné UI** - Skrýt/zobrazit hlavičku, toolbar a více
+- 📱 **Responzivní** - Funguje na všech velikostech s dynamickou velikostí karty
 
 ## 🎥 Náhled
 
@@ -87,6 +88,10 @@ height: 500
 | `default_interval` | string | `'1m'` | ❌ | Výchozí vybraný interval |
 | `exchange` | string | `'binance'` | ❌ | Název burzy (zobrazeno v info baru) |
 | `height` | number | `500` | ❌ | Výška grafu v pixelech |
+| `show_header` | boolean | `true` | ❌ | Zobrazit/skrýt hlavičku s názvem a tlačítky |
+| `show_toolbar` | boolean | `true` | ❌ | Zobrazit/skrýt toolbar s výběrem intervalů |
+| `show_volume` | boolean | `false` | ❌ | Zobrazit/skrýt objemy (budoucí funkce) |
+| `chart_type` | string | `'candlestick'` | ❌ | Typ grafu (budoucí: line, area) |
 
 ### Podporované Intervaly
 
