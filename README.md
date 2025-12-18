@@ -10,11 +10,12 @@ A custom Home Assistant Lovelace card that displays **real-time cryptocurrency c
 - 🎨 **TradingView-Style Charts** - Professional financial charts using Lightweight Charts
 - ⏱️ **Multiple Time Intervals** - 1m, 5m, 15m, 1h, 4h, 1d and more
 - 🔴🟢 **Color-Coded Candles** - Green for rising, red for falling (like TradingView)
-- 💹 **OHLC Display** - Real-time Open, High, Low, Close values
+- 📊 **Volume Bars** - Trading volume histogram with color coding
+- 💹 **OHLC Display** - Real-time Open, High, Low, Close values with smart formatting
 - 🔌 **WebSocket Connection** - Live status indicator with auto-reconnect
 - 🎯 **Binance Integration** - Direct connection to Binance crypto market data
 - 🌓 **Auto Light/Dark Theme** - Detects and adapts to HA theme automatically
-- 🎛️ **Customizable UI** - Hide/show header, toolbar, and more
+- 🎛️ **Customizable UI** - Hide/show header, toolbar, volume bars
 - 📱 **Responsive** - Works on all screen sizes with dynamic card sizing
 
 ## 🎥 Preview
@@ -90,7 +91,7 @@ height: 500
 | `height` | number | `500` | ❌ | Chart height in pixels |
 | `show_header` | boolean | `true` | ❌ | Show/hide card header with title and buttons |
 | `show_toolbar` | boolean | `true` | ❌ | Show/hide interval selection toolbar |
-| `show_volume` | boolean | `false` | ❌ | Show/hide volume bars (future feature) |
+| `show_volume` | boolean | `true` | ❌ | Show/hide volume bars below chart |
 | `chart_type` | string | `'candlestick'` | ❌ | Chart type (future: line, area) |
 
 ### Supported Intervals

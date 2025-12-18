@@ -10,11 +10,12 @@ Vlastní karta pro Home Assistant Lovelace, která zobrazuje **živé cryptocurr
 - 🎨 **TradingView Styl** - Profesionální finanční grafy pomocí Lightweight Charts
 - ⏱️ **Více Časových Intervalů** - 1m, 5m, 15m, 1h, 4h, 1d a více
 - 🔴🟢 **Barevné Svíčky** - Zelené pro růst, červené pro pokles (jako TradingView)
-- 💹 **OHLC Zobrazení** - Real-time Open, High, Low, Close hodnoty
+- 📊 **Volume Bars** - Histogram objemů s barevným kódováním
+- 💹 **OHLC Zobrazení** - Real-time Open, High, Low, Close hodnoty s chytrým formátováním
 - 🔌 **WebSocket Připojení** - Indikátor živého spojení s auto-reconnect
 - 🎯 **Binance Integrace** - Přímé připojení k Binance krypto tržním datům
 - 🌓 **Auto Světlý/Tmavý Motiv** - Detekuje a přizpůsobuje se HA motivu automaticky
-- 🎛️ **Přizpůsobitelné UI** - Skrýt/zobrazit hlavičku, toolbar a více
+- 🎛️ **Přizpůsobitelné UI** - Skrýt/zobrazit hlavičku, toolbar, volume bars
 - 📱 **Responzivní** - Funguje na všech velikostech s dynamickou velikostí karty
 
 ## 🎥 Náhled
@@ -90,7 +91,7 @@ height: 500
 | `height` | number | `500` | ❌ | Výška grafu v pixelech |
 | `show_header` | boolean | `true` | ❌ | Zobrazit/skrýt hlavičku s názvem a tlačítky |
 | `show_toolbar` | boolean | `true` | ❌ | Zobrazit/skrýt toolbar s výběrem intervalů |
-| `show_volume` | boolean | `false` | ❌ | Zobrazit/skrýt objemy (budoucí funkce) |
+| `show_volume` | boolean | `true` | ❌ | Zobrazit/skrýt volume bars pod grafem |
 | `chart_type` | string | `'candlestick'` | ❌ | Typ grafu (budoucí: line, area) |
 
 ### Podporované Intervaly

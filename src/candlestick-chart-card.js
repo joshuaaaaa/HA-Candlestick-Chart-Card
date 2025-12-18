@@ -27,7 +27,7 @@ class CandlestickChartCard extends HTMLElement {
       height: config.height || 500,
       show_header: config.show_header !== false,
       show_toolbar: config.show_toolbar !== false,
-      show_volume: config.show_volume || false,
+      show_volume: config.show_volume !== false, // Show volume by default
       chart_type: config.chart_type || 'candlestick',
       ...config
     };
@@ -325,6 +325,24 @@ class CandlestickChartCard extends HTMLElement {
       wickDownColor: colors.candles.wickDownColor,
     });
 
+    // Add volume series if enabled
+    if (this._config.show_volume) {
+      this.volumeSeries = this.chart.addHistogramSeries({
+        color: '#26a69a',
+        priceFormat: {
+          type: 'volume',
+        },
+        priceScaleId: '', // separate price scale for volume
+      });
+
+      this.volumeSeries.priceScale().applyOptions({
+        scaleMargins: {
+          top: 0.8, // volume takes bottom 20% of chart
+          bottom: 0,
+        },
+      });
+    }
+
     // Handle resize
     const resizeObserver = new ResizeObserver(entries => {
       if (this.chart && entries.length > 0) {
@@ -334,14 +352,20 @@ class CandlestickChartCard extends HTMLElement {
     });
     resizeObserver.observe(container);
 
-    // Crosshair move handler to update price info
+    // Crosshair move handler - show current candle when not hovering
     this.chart.subscribeCrosshairMove((param) => {
-      if (!param.time || !param.seriesData.get(this.candlestickSeries)) {
+      if (!param.time) {
+        // Mouse left chart area - show current candle
+        if (this.currentCandle) {
+          this.updatePriceInfo(this.currentCandle);
+        }
         return;
       }
 
       const data = param.seriesData.get(this.candlestickSeries);
-      this.updatePriceInfo(data);
+      if (data) {
+        this.updatePriceInfo(data);
+      }
     });
   }
 
@@ -369,17 +393,30 @@ class CandlestickChartCard extends HTMLElement {
     }
   }
 
+  formatPrice(price) {
+    // Dynamic formatting based on price magnitude
+    if (price >= 1000) {
+      return price.toFixed(2);
+    } else if (price >= 1) {
+      return price.toFixed(4);
+    } else if (price >= 0.0001) {
+      return price.toFixed(6);
+    } else {
+      return price.toFixed(8);
+    }
+  }
+
   updatePriceInfo(data) {
     const openEl = this.shadowRoot.querySelector('#open');
     const highEl = this.shadowRoot.querySelector('#high');
     const lowEl = this.shadowRoot.querySelector('#low');
     const closeEl = this.shadowRoot.querySelector('#close');
 
-    if (data) {
-      openEl.textContent = data.open.toFixed(4);
-      highEl.textContent = data.high.toFixed(4);
-      lowEl.textContent = data.low.toFixed(4);
-      closeEl.textContent = data.close.toFixed(4);
+    if (data && openEl && highEl && lowEl && closeEl) {
+      openEl.textContent = this.formatPrice(data.open);
+      highEl.textContent = this.formatPrice(data.high);
+      lowEl.textContent = this.formatPrice(data.low);
+      closeEl.textContent = this.formatPrice(data.close);
 
       // Color the close price
       closeEl.classList.remove('up', 'down');
@@ -408,8 +445,19 @@ class CandlestickChartCard extends HTMLElement {
         close: parseFloat(d[4]),
       }));
 
+      const volumeData = data.map(d => ({
+        time: Math.floor(d[0] / 1000),
+        value: parseFloat(d[5]), // volume
+        color: parseFloat(d[4]) >= parseFloat(d[1]) ? '#26a69a80' : '#ef535080', // green if close >= open, else red
+      }));
+
       if (this.candlestickSeries && candleData.length > 0) {
         this.candlestickSeries.setData(candleData);
+
+        // Set volume data if enabled
+        if (this.volumeSeries && volumeData.length > 0) {
+          this.volumeSeries.setData(volumeData);
+        }
 
         // Update price info with latest candle
         const latestCandle = candleData[candleData.length - 1];
@@ -471,10 +519,20 @@ class CandlestickChartCard extends HTMLElement {
         close: parseFloat(kline.c),
       };
 
+      const volume = {
+        time: Math.floor(kline.t / 1000),
+        value: parseFloat(kline.v),
+        color: parseFloat(kline.c) >= parseFloat(kline.o) ? '#26a69a80' : '#ef535080',
+      };
+
       if (this.candlestickSeries) {
         this.candlestickSeries.update(candle);
         this.updatePriceInfo(candle);
         this.currentCandle = candle;
+      }
+
+      if (this.volumeSeries) {
+        this.volumeSeries.update(volume);
       }
     };
 
@@ -533,7 +591,7 @@ class CandlestickChartCard extends HTMLElement {
       height: 500,
       show_header: true,
       show_toolbar: true,
-      show_volume: false,
+      show_volume: true,
       chart_type: 'candlestick'
     };
   }
